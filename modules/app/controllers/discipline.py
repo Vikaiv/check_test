@@ -1,5 +1,5 @@
 ''' controller and routes for disciplines '''
-# coding: utf8
+# -*- coding: utf-8 -*-
 import os
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -27,7 +27,6 @@ def discipline():
     if request.method == 'POST':
         user = get_jwt_identity()
         LOG.debug(user)
-        data['email'] = user['email']
         data = validate_discipline(data)
         if data['ok']:
             db_response = mongo.db.disciplines.insert_one(data['data'])
@@ -61,11 +60,12 @@ def discipline():
 
 
 @app.route('/list/discipline', methods=['GET'])
-# @jwt_required
+@jwt_required
 def list_disciplines():
     ''' route to get all the disciplines for a user '''
-    # user = get_jwt_identity()
-    user = {'email': 'riken.mehta03@gmail.com'}
+    user = get_jwt_identity()
+    LOG.debug(user)
+    # user = {'email': 'riken.mehta03@gmail.com'}
     if request.method == 'GET':
         query = request.args
         data = mongo.db.disciplines.find({'email': user['email']})
@@ -78,4 +78,5 @@ def list_disciplines():
                     return_data[discipline['status']] = [discipline]
         else:
             return_data = list(data)
-        return jsonify({'ok': True, 'data': return_data})
+        return jsonify({'ok': True, 'data': return_data
+})

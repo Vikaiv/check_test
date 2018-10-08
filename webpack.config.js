@@ -25,19 +25,24 @@ module.exports = {
     contentBase: resolve(__dirname, 'dist'),
     host: "127.0.0.1",
     port: 8080,
-    // proxy: {
+    proxy: {
     //     '/bundle.js': {
     //         target: 'http://127.0.0.1:8080'
     //     },
     //     '/vendors.js': {
     //         target: 'http://127.0.0.1:8080'
     //     },
-    //     '/**': {
-    //         target: 'http://127.0.0.1:4000',
-    //         secure: false,
-    //         changeOrigin: true
-    //     }
-    // }
+        '/list/discipline': {
+            target: 'http://127.0.0.1:4000/',
+            secure: true,
+            changeOrigin: true
+        },
+        '/auth': {
+          target: 'http://127.0.0.1:4000/',
+          secure: true,
+          changeOrigin: true
+      }
+    }
   },
 
   module: {

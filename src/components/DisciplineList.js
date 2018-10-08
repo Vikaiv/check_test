@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import styled, { ThemeProvider } from "styled-components";
-// import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
+import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
 import PropTypes from "prop-types";
 import nanoid from "nanoid";
 import Discipline from "./Discipline";
-import theme from "../../../../../../theme";
+import theme from "../theme";
 
 /* eslint-disable camelcase */
 
@@ -39,29 +39,25 @@ const Title = styled.div`
 @inject("store")
 @observer
 class DisciplineList extends Component {
-  // static propTypes = {
-  //   store: PropTypesMobx.observableObject,
-  //   firms: PropTypes.object,
-  //   checkId: PropTypes.string,
-  //   error: PropTypes.bool,
-  // };
+  static propTypes = {
+    store: PropTypesMobx.observableObject,
+  };
 
   renderDisciplineList = (disciplines) => (
     <List>
       {disciplines.map(item =>
         (<DisciplineContainer key={nanoid()}>
-            <Discipline discipline={item} />
+            <Discipline name={item.description} number={item.number} elementaries={item.elementaries} />
         </DisciplineContainer>),
       )}
     </List>);
 
   render() {
-    const { disciplines } = this.props;
+    const disciplines = this.props.store.disciplines;
+    // console.log(disciplines);
     return (
         <ThemeProvider theme={theme}>
-          <DisciplineList>
-            {this.renderDisciplineList(disciplines)}
-          </DisciplineList>
+          <div>{this.renderDisciplineList(disciplines)}</div>
         </ThemeProvider>
     );
   }

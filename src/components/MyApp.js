@@ -1,33 +1,32 @@
 import React from 'react';
-import { inject, observer } from "mobx-react";
+import { inject, observer, Provider } from "mobx-react";
 
-import CssBaseline from '@material-ui/core/CssBaseline';
+// import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
 
+import RootStore from '../store/rootStore';
 import MyAppBar from './MyAppBar';
+import DisciplineList from './DisciplineList';
 
 const theme = createMuiTheme({
     palette: {
         primary: grey,
     },
-    MuiToolbar: { // Name of the component ⚛️ / style sheet
-        root: { // Name of the rule
-          justifyContent: 'space-between', // Some CSS
-        },
-    },
 });
 
-@inject("store")
 @observer
 class MyApp extends React.Component {
-    render() {
-        return (
+    state = {
+        store: new RootStore()
+    }
+    render = () => 
+        (<Provider store={this.state.store}>
             <MuiThemeProvider theme={theme}>
                 <MyAppBar />
+                <DisciplineList />
             </MuiThemeProvider>
-        );
+        </Provider>);
     }
-}
 
 export default MyApp;

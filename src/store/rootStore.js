@@ -1,25 +1,41 @@
-import { observable, action } from "mobx";
+import { observable, action, runInAction } from "mobx";
+import { auth } from "../api/login";
 import { fetchDisciplines } from "../api/disciplines";
 
 class RootStore {
-//   @observable disciplines = [];
+  @observable disciplines = [];
+  @observable token = null;
 
-  constructor(apiUrl) {
-    // this.checks = new Checks(this, apiUrl);
-    // this.checks.getDictionaries();
-    // this.formStore = new FormStore();
-    // this.results = new Results(this, apiUrl);
-    // this.router = new RouterStore();
-    // this.history = new History(this, apiUrl);
-    // this.history.getAllHistory();
-    // this.router.goTo(routerConfig.checks);
-    this.fetchDisciplines();
+  constructor() {
+    this.authUser("vi@i.com", "12345")
   }
 
   @action
-  fetchAllDisciplines = () => {
-    fetchDisciplines()
-      .then(result => console.log(result))
+  authUser = (username, password) => {
+    auth(username, password, {
+      success: (result) => {
+        // console.log("result", result.result.data.token);
+        runInAction(() => {
+          this.token = result.result.data.token;
+          this.fetchDisciplinesList(this.token);
+        });  
+      },
+      error: (result) => { console.error("error: ", result); },
+    })
+  }
+
+  @action
+  fetchDisciplinesList = () => {
+    // console.log("start action");
+    fetchDisciplines(this.token, {
+      success: (result) => {
+        runInAction(() => {
+          this.disciplines = result.result.data;
+          // console.log(this.disciplines);
+        });      
+      },
+      error: (result) => { console.error("error: ", result); },
+    })
   }
 }
 
