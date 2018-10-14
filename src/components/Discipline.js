@@ -1,14 +1,17 @@
 import React, { Fragment, Component } from "react";
 import styled, { ThemeProvider } from "styled-components";
-// import Elementary from "./Elementary";
-// import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
+import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
 import PropTypes from "prop-types";
 // import theme from "../../../../../../theme";
+import views from '../views/views';
 
 const Elementary = styled.div`
   display: flex;
   height: 20px;
 `;
+
+@inject("store")
+@observer
 class Discipline extends Component {
   state = {
     isInfoShown: false,
@@ -24,11 +27,16 @@ class Discipline extends Component {
     this.setState({isInfoShown: !this.state.isInfoShown})
   }
 
+  showTests = (id) => {
+    const { store } = this.props;
+    const {router: {goTo}} = store;
+    goTo(views.tests);
+    store.fetchTests(id);
+  }
+
   render() {
-    const { number, name, elementaries } = this.props;
-    console.log(elementaries);
+    const { number, name, elementaries, id } = this.props;
     const { isInfoShown } = this.state;
-    console.log(isInfoShown);
     return (
       <div>
         {number}
@@ -37,7 +45,7 @@ class Discipline extends Component {
         {isInfoShown &&
           <div>{this.renderElementaries(elementaries)}</div>
         }
-        <button onClick={() => console.log("show test")}>Show available tests</button>
+        <button onClick={() => this.showTests(id)}>Show available tests</button>
     </div>
     )
   }

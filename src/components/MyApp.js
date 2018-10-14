@@ -1,11 +1,13 @@
 import React from 'react';
 import { inject, observer, Provider } from "mobx-react";
+import {MobxRouter, startRouter} from 'mobx-router';
 
 // import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
 
 import RootStore from '../store/rootStore';
+import views from "../views/views";
 import MyAppBar from './MyAppBar';
 import DisciplineList from './DisciplineList';
 
@@ -17,14 +19,18 @@ const theme = createMuiTheme({
 
 @observer
 class MyApp extends React.Component {
-    state = {
-        store: new RootStore()
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            store: new RootStore(),
+        };
+        startRouter(views, this.state.store);
+      }
     render = () => 
         (<Provider store={this.state.store}>
             <MuiThemeProvider theme={theme}>
                 <MyAppBar />
-                <DisciplineList />
+                <MobxRouter />
             </MuiThemeProvider>
         </Provider>);
     }

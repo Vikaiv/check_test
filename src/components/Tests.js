@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
-import PropTypes from "prop-types";
 import nanoid from "nanoid";
-import Discipline from "./Discipline";
+import Test from "./Test";
 import theme from "../theme";
 
 /* eslint-disable camelcase */
@@ -13,7 +12,7 @@ const List = styled.div`
   flex-direction: column;
 `;
 
-const DisciplineContainer = styled.div`
+const TestContainer = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 12px;
@@ -38,34 +37,29 @@ const Title = styled.div`
 
 @inject("store")
 @observer
-class DisciplineList extends Component {
+class Tests extends Component {
   static propTypes = {
     store: PropTypesMobx.observableObject,
   };
 
-  renderDisciplineList = (disciplines) => (
+  renderTestList = (tests) => (
     <List>
-      {disciplines.map(item =>
-        (<DisciplineContainer key={nanoid()}>
-            <Discipline
-              name={item.description}
-              number={item.number}
-              elementaries={item.elementaries}
-              id={item._id}
-            />
-        </DisciplineContainer>),
+      {tests.map((item, index) =>
+        (<TestContainer key={nanoid()}>
+            <Test name={item.title} questions={item.questions} />
+        </TestContainer>),
       )}
     </List>);
 
   render() {
-    const disciplines = this.props.store.disciplines;
-    // console.log(disciplines);
+    const { tests }= this.props.store;
+    console.log(tests.length);
     return (
         <ThemeProvider theme={theme}>
-          <div>{disciplines.length && this.renderDisciplineList(disciplines)}</div>
+          <div>{tests.length && this.renderTestList(tests)}</div>
         </ThemeProvider>
     );
   }
 }
 
-export default DisciplineList;
+export default Tests;
