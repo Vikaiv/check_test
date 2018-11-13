@@ -1,3 +1,5 @@
+
+
 import React, { Fragment, Component } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import nanoid from "nanoid";
@@ -33,6 +35,7 @@ class Test extends Component {
           this.renderQuestions(questions)
         }
         <button onClick={this.showInfo}>show</button>
+        <button onClick={this.checkTest}>Проверить тест на соответствие</button>
     </div>)
   } 
 }
