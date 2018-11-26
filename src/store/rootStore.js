@@ -2,17 +2,16 @@ import { observable, action, runInAction } from "mobx";
 import { RouterStore } from 'mobx-router';
 import views from "../views/views";
 import { auth } from "../api/login";
-import { fetchDisciplines } from "../api/disciplines";
 import { fetchTestsByDisciplineId } from "../api/tests";
-
+import DisciplineStore from "./disciplineStore";
 class RootStore {
-  @observable disciplines = [];
   @observable tests = [];
   @observable token = null;
 
   constructor() {
     this.authUser("vi@i.com", "12345")
     this.router = new RouterStore();
+    this.disciplines = new DisciplineStore();
     this.router.goTo(views.home);
   }
 
@@ -23,22 +22,9 @@ class RootStore {
         // console.log("result", result.result.data.token);
         runInAction(() => {
           this.token = result.result.data.token;
-          this.fetchDisciplinesList(this.token);
+          console.log(this.token);
+          this.disciplines.fetchDisciplinesList(this.token);
         });  
-      },
-      error: (result) => { console.error("error: ", result); },
-    })
-  }
-
-  @action
-  fetchDisciplinesList = () => {
-    // console.log("start action");
-    fetchDisciplines(this.token, {
-      success: (result) => {
-        runInAction(() => {
-          this.disciplines = result.result.data;
-          console.log(this.disciplines);
-        });      
       },
       error: (result) => { console.error("error: ", result); },
     })

@@ -26,6 +26,7 @@ const styles = {
 class MyAppBar extends Component {
     render() {
         const { classes } = this.props;
+        console.log("classes", classes.root);
         return (
             <div>
                 <AppBar position="static" className={classes.root}>

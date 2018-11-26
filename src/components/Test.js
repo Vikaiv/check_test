@@ -5,7 +5,10 @@ import styled, { ThemeProvider } from "styled-components";
 import nanoid from "nanoid";
 // import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
 import PropTypes from "prop-types";
-// import theme from "../../../../../../theme";
+
+import List from '@material-ui/core/List';
+
+import BaseList from "./BaseList";
 
 class Test extends Component {
   state = {
@@ -27,16 +30,28 @@ class Test extends Component {
     )
 
   render = () => {
-    const { name, questions } = this.props;
+    const { name, questions, classes } = this.props;
+    const { isInfoShown } = this.props;
     return (
-      <div>
-        {name}
-        {this.state.isInfoShown &&
-          this.renderQuestions(questions)
+      <BaseList
+        primaryText={name}
+        secondaryText={
+            <List classes={classes}>
+              {this.renderQuestions(questions)}
+            </List>
         }
-        <button onClick={this.showInfo}>show</button>
-        <button onClick={this.checkTest}>Проверить тест на соответствие</button>
-    </div>)
-  } 
+        primaryAction={{
+          action:  this.showInfo,
+          title: "Развернуть",
+        }}
+        secondaryAction={{
+          action: this.checkTest,
+          title: "Проверить на соответствие",
+        }}
+        show={isInfoShown}
+      >
+      </BaseList>)
+    }
 }
+
 export default Test;

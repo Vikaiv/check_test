@@ -2,30 +2,41 @@ import React, { Fragment, Component } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
 import PropTypes from "prop-types";
-// import theme from "../../../../../../theme";
+import nanoid from "nanoid";
+
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+
+import BaseList from "./BaseList";
+
 import views from '../views/views';
 
 const Elementary = styled.div`
   display: flex;
-  height: 20px;
+  margin-bottom: 10px;
 `;
 
 @inject("store")
 @observer
 class Discipline extends Component {
+
   state = {
-    isInfoShown: false,
+    isInfoShown: false
   }
 
   renderElementaries = (elementaries) =>
     elementaries.map(item =>
-      <Elementary>
-        {item.number} {item.description}
+      <Elementary
+        key={nanoid()}
+      >
+        • {item.description}
       </Elementary>)
 
-  showInfo = () => {
-    this.setState({isInfoShown: !this.state.isInfoShown})
-  }
+showDisciplineInfo = () => {
+  this.setState({
+    isInfoShown: !this.state.isInfoShown,
+  })
+}
 
   showTests = (id) => {
     const { store } = this.props;
@@ -35,18 +46,27 @@ class Discipline extends Component {
   }
 
   render() {
-    const { number, name, elementaries, id } = this.props;
+    const { name, elementaries, id, classes } = this.props;
     const { isInfoShown } = this.state;
     return (
-      <div>
-        {number}
-        {name}
-        <button onClick={this.showInfo}>Show info</button>
-        {isInfoShown &&
-          <div>{this.renderElementaries(elementaries)}</div>
+      <BaseList
+        primaryText={name}
+        secondaryText={
+            <List classes={classes}>
+              {this.renderElementaries(elementaries)}
+            </List>
         }
-        <button onClick={() => this.showTests(id)}>Show available tests</button>
-    </div>
+        primaryAction={{
+          action:  this.showDisciplineInfo,
+          title: "Развернуть",
+        }}
+        secondaryAction={{
+          action: () => this.showTests(id),
+          title: "Перейти к тестам",
+        }}
+        show={isInfoShown}
+      >
+      </BaseList>
     )
   }
 }

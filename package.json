@@ -2,12 +2,12 @@
   "name": "check_tests",
   "version": "1.0.0",
   "main": "index.py",
-  "repository": "git@github.com:rikenmehta03/flask-to-do.git",
+  "repository": "git@github.com/Vikaiv/check_test.git",
   "author": "Victoria Ivanova <vikaaiv17@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "set NODE_ENVV=production webpack --config webpack.config.js",
-    "start": "set NODE_ENV=development webpack-dev-server --config webpack.config.js --mode development",
+    "build": "NODE_ENVV=production webpack --config webpack.config.js",
+    "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js --mode development",
     "serve": "webpack-dev-server --mode development --open"
   },
   "devDependencies": {
