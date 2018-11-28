@@ -41,6 +41,11 @@ def static_proxy(path):
     dir_name = os.path.join(PUBLIC_PATH, '/'.join(path.split('/')[:-1]))
     return send_from_directory(dir_name, file_name)
 
+# @app.route('/results')
+# def results():
+#     """ static files serve """
+#     return send_from_directory(PUBLIC_PATH, 'index.html')
+
 
 @app.route('/api/v1.0/ping', methods=['GET'])
 def dummy_endpoint():
