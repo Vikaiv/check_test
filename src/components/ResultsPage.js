@@ -6,13 +6,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
 import QuestionWordingResult from "./QuestionWordingResult";
 import Pie3dChart from "./charts/Pie3dChart";
 import Bar2dChart from "./charts/Bar2dChart";
 import data from "../fakeData/fakeData.json"
 
-import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   list: {

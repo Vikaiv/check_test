@@ -15,3 +15,20 @@ export const fetchDisciplines = (token, {success, error}) => {
     exception => error(exception),
   );
 }
+
+export const addDiscipline = (token, data, {success, error}) => {
+  var opt = {
+      headers: {
+          "content-type": "application/json",
+          'Authorization': 'Bearer ' + token
+      },
+      method: "POST",
+      body: data,
+  };
+  fetch('/discipline', opt)
+  .then(response => response.json())
+  .then(result => success({result}))
+  .catch(
+    exception => error(exception),
+  );
+}
