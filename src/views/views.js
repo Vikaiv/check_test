@@ -4,8 +4,9 @@ import React from 'react';
 import { Route } from 'mobx-router';
 
 //components
-import Tests from '../components/Tests';
 import DisciplineList from '../components/DisciplineList';
+import Tests from '../components/Tests';
+import ResultsPage from '../components/ResultsPage';
 
 const views = {
   home: new Route({
@@ -15,6 +16,10 @@ const views = {
   tests: new Route({
     path: '/tests',
     component: <Tests/>,
+  }),
+  results: new Route({
+    path: '/results',
+    component: <ResultsPage />,
   }),
 };
 export default views;

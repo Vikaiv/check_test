@@ -11,9 +11,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-// import theme from "../../../../../../theme";
-import views from '../views/views';
-
 const styles = theme => ({
   root: {
     fontFamily: theme.typography.fontFamily,

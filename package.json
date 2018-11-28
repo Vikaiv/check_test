@@ -40,12 +40,14 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
+    "fusioncharts": "^3.13.2-sr.1",
     "mobx": "^4.3.1",
     "mobx-react": "^5.2.5",
     "prop-types": "^15.6.2",
     "react": "^16.4.0",
     "react-dev-utils": "^4.2.1",
     "react-dom": "^16.4.0",
+    "react-fusioncharts": "^2.0.7",
     "styled-components": "^3.4.9",
     "whatwg-fetch": "^3.0.0"
   }

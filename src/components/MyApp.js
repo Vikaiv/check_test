@@ -1,5 +1,5 @@
 import React from 'react';
-import { inject, observer, Provider } from "mobx-react";
+import { observer, Provider } from "mobx-react";
 import {MobxRouter, startRouter} from 'mobx-router';
 
 // import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +9,6 @@ import indigo from '@material-ui/core/colors/indigo';
 import RootStore from '../store/rootStore';
 import views from "../views/views";
 import MyAppBar from './MyAppBar';
-import DisciplineList from './DisciplineList';
 
 const theme = createMuiTheme({
     palette: {

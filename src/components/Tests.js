@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import styled, { ThemeProvider } from "styled-components";
 import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
 import nanoid from "nanoid";
 
 import List from '@material-ui/core/List';
 
-import theme from "../theme";
 import Test from "./Test";
 
 @inject("store")
@@ -24,11 +22,8 @@ class Tests extends Component {
 
   render() {
     const { tests }= this.props.store;
-    console.log(tests.length);
     return (
-        <ThemeProvider theme={theme}>
-          <div>{tests.length && this.renderTestList(tests)}</div>
-        </ThemeProvider>
+      <div>{tests.length && this.renderTestList(tests)}</div>
     );
   }
 }
