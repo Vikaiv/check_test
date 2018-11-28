@@ -1,7 +1,7 @@
 import { observable, action, runInAction } from "mobx";
 import { RouterStore } from 'mobx-router';
 import views from "../views/views";
-import { fetchDisciplines } from "../api/disciplines";
+import { fetchDisciplines, addDiscipline } from "../api/disciplines";
 
 class DisciplineStore {
   @observable disciplines = [];
@@ -47,6 +47,19 @@ class DisciplineStore {
     const disciplineIndex = this.disciplines.findIndex(item => item._id === disciplineId);
     this.disciplines[disciplineIndex].isInfoShown = !this.disciplines[disciplineIndex].isInfoShown;
     // this.disciplines[0].isInfoShown = true;
+  }
+
+  @action
+  addDiscipline = (data) => {
+    addDiscipline(this.token, data, {
+      success: (result) => {
+        console.log(result);
+        runInAction(() => {
+          console.log(this.disciplines);
+        });      
+      },
+      error: (result) => { console.error("error: ", result); },
+    })
   }
 }
 

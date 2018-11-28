@@ -56,6 +56,10 @@ const ChartContainer = styled.div`
   align-items: center;
 `;
 
+const Bar2dContainer = styled.div`
+  align-self: flex-start;
+`
+
 const TableContainer = styled(ChartContainer)`
   align-items: flex-start;
   padding-left: 20px;
@@ -66,7 +70,6 @@ const renderUnusedQuestionTypesList = (types, classes) => (
   <List className={classes.list}>
     {types.map((type, index) => (
       <ListItem key={`unused-${index}`} className={classes.item}>
-        {console.log(type)}
         <ListItemText primary={`• ${type}`} />
       </ListItem>
     ))}
@@ -79,9 +82,11 @@ const ResultsPage  = ({classes}) =>
         <Pie3dChart
           configs={coverageChartConfigsTotal}
         />
-        <Bar2dChart
-          configs={coverageChartConfigsByElementary}
-        />
+        <Bar2dContainer>
+          <Bar2dChart
+            configs={coverageChartConfigsByElementary}
+          />
+        </Bar2dContainer>
         <Pie3dChart
           configs={questionTypesDiversityConfigs}
         />

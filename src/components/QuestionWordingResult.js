@@ -48,7 +48,7 @@ const renderMistakes = (data) => (
 
 const renderTableContent = (data, classes) => (
   data.map(row => (
-    <TableRow className={classes.row} key={row.id}>
+    <TableRow key={row.id} className={classes.row}>
       <CustomTableCell padding="checkbox" component="th" scope="row">
         {row.number}
       </CustomTableCell>

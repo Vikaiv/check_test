@@ -4,11 +4,12 @@ import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
 import nanoid from "nanoid";
 
 import List from '@material-ui/core/List';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
 
 import Discipline from "./Discipline";
+import DisciplineDialog from "./DisciplineDialog";
 
 const styles = theme => ({
   addButton: {
@@ -25,8 +26,21 @@ class DisciplineList extends Component {
     store: PropTypesMobx.observableObject,
   };
 
+  state = {
+    isDisciplineDialogOpen: false
+  }
+
   addDiscipline = () => {
-    
+    this.closeDisciplineDialog();
+    this.store.disciplines.addDiscipline();
+  }
+
+  openDisciplineDialog = () => {
+    this.setState({isDisciplineDialogOpen: true})
+  }
+
+  closeDisciplineDialog = () => {
+    this.setState({isDisciplineDialogOpen: false})
   }
 
   renderDisciplineList = (disciplines) => (
@@ -50,15 +64,19 @@ class DisciplineList extends Component {
     return (
       <Fragment>
         {disciplines.length ? this.renderDisciplineList(disciplines) : ""}
-        <Button
-          variant="fab"
+        <Fab
           color="secondary"
           aria-label="Добавить"
           className={classes.addButton}
-          onClick={this.addDiscipline()}
+          onClick={this.openDisciplineDialog}
         >
           <AddIcon />
-        </Button>
+        </Fab>
+        <DisciplineDialog
+          open={this.state.isDisciplineDialogOpen}
+          onOpen={this.openDisciplineDialog}
+          onClose={this.closeDisciplineDialog}
+        />
       </Fragment>
     );
   }

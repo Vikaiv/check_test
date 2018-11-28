@@ -22,7 +22,6 @@ class RootStore {
         // console.log("result", result.result.data.token);
         runInAction(() => {
           this.token = result.result.data.token;
-          console.log(this.token);
           this.disciplines.fetchDisciplinesList(this.token);
         });  
       },
@@ -32,12 +31,10 @@ class RootStore {
 
   @action
   fetchTests = (disciplineId) => {
-    console.log(disciplineId);
     fetchTestsByDisciplineId(this.token, disciplineId, {
       success: (result) => {
         runInAction(() => {
           this.tests = result.result.data;
-          console.log(this.tests);
         });      
       },
       error: (result) => { console.error("error: ", result); },
