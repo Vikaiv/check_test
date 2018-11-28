@@ -41,8 +41,8 @@ const styles = theme => ({
 });
 
 const renderMistakes = (data) => (
-  data.map(mistake => (
-    <span>{mistake},<br /></span>
+  data.map((mistake, index) => (
+    <span key={`mistake-${index}`}>{mistake},<br /></span>
   ))
 )
 

@@ -1,9 +1,6 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import ReactFC from 'react-fusioncharts';
-import FusionCharts from 'fusioncharts';
-import Pie3D from 'fusioncharts/fusioncharts.charts';
-import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import styled from "styled-components";
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,6 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 import QuestionWordingResult from "./QuestionWordingResult";
+import Pie3dChart from "./charts/Pie3dChart";
+import Bar2dChart from "./charts/Bar2dChart";
 import data from "../fakeData/fakeData.json"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -30,23 +29,38 @@ const styles = theme => ({
   }
 });
 
-ReactFC.fcRoot(FusionCharts, Pie3D, FusionTheme);
 const chartConfigs = {
-  type: 'pie3d',
   width: '700', 
   height: '400',
   dataFormat: 'json',
 }
 
-const coverageChartConfigs = {
+const coverageChartConfigsTotal = {
   ...chartConfigs,
-  dataSource: data.coverage,
+  dataSource: data.coverage.total,
+}
+
+const coverageChartConfigsByElementary = {
+  ...chartConfigs,
+  dataSource: data.coverage.byElementary,
 }
 
 const questionTypesDiversityConfigs = {
   ...chartConfigs,
   dataSource: data.questionTypesDiversity.percentage,
 }
+
+const ChartContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const TableContainer = styled(ChartContainer)`
+  align-items: flex-start;
+  padding-left: 20px;
+  padding-right: 25px;
+`;
 
 const renderUnusedQuestionTypesList = (types, classes) => (
   <List className={classes.list}>
@@ -61,17 +75,24 @@ const renderUnusedQuestionTypesList = (types, classes) => (
 
 const ResultsPage  = ({classes}) =>
     (<Fragment>
-      <ReactFC
-        {...coverageChartConfigs}
-      />
-      <ReactFC
-        {...questionTypesDiversityConfigs}
-      />
-      <Typography variant="h6" className={classes.title}>
-        Список неиспользуеммых типов вопроса:
-      </Typography>
-      {renderUnusedQuestionTypesList(data.questionTypesDiversity.missedTypes, classes)}
-      <QuestionWordingResult data={data.wrongQuestionWording}/>
+      <ChartContainer>
+        <Pie3dChart
+          configs={coverageChartConfigsTotal}
+        />
+        <Bar2dChart
+          configs={coverageChartConfigsByElementary}
+        />
+        <Pie3dChart
+          configs={questionTypesDiversityConfigs}
+        />
+      </ChartContainer>
+      <TableContainer>
+        <Typography variant="h6" className={classes.title}>
+          Список неиспользуеммых типов вопроса:
+        </Typography>
+        {renderUnusedQuestionTypesList(data.questionTypesDiversity.missedTypes, classes)}
+        <QuestionWordingResult data={data.wrongQuestionWording}/>
+      </TableContainer>
     </Fragment>)
 
 
