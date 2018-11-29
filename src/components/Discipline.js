@@ -16,6 +16,12 @@ const Elementary = styled.div`
   margin-bottom: 10px;
 `;
 
+const styles = theme => ({
+  list: {
+    paddingLeft: 15,
+  }
+})
+
 @inject("store")
 @observer
 class Discipline extends Component {
@@ -52,7 +58,7 @@ showDisciplineInfo = () => {
       <BaseList
         primaryText={name}
         secondaryText={
-            <List classes={classes}>
+            <List className={classes.list}>
               {this.renderElementaries(elementaries)}
             </List>
         }
@@ -71,4 +77,4 @@ showDisciplineInfo = () => {
   }
 }
 
-export default Discipline;
+export default withStyles(styles)(Discipline);

@@ -25,20 +25,44 @@ const FormContainer = styled.div`
 
 class DisciplineForm extends React.Component {
   state = {
-    inputs: [""],
+    elementaries: [{number: "", elementaryName: ""}],
+    disciplineName: "",
   }
 
   addElementaryField = () => {
-    this.setState({ inputsCount: this.state.inputs.push("") })
+    this.setState({ 
+      elementaries: this.state.elementaries.concat([{number: "", elementaryName: ""}])
+    })
   }
 
-  renderInputs = (inputs) => {
-    return inputs.map((item, index) => <ElementaryForm key={`input-${index}`}/>)
+  renderInputs = (elementaries) => {
+    return elementaries.map((item, index) => (
+      <ElementaryForm
+        key={`input-${index}`}
+        index={index}
+        onElementaryChanged={this.handleElementariesChanged}
+      />))
+  }
+
+  handleNameChanged = (event) => {
+    this.setState({ disciplineName: event.target.name })
+  }
+
+  handleElementariesChanged = (event) => {
+    const { id, value } = event.target;
+    const digitRegExp = /\d{1,4}/;
+    const typeRegExp = /(number|elementaryName)/;
+    const index = digitRegExp.exec(id);
+    const type = typeRegExp.exec(id)[0];
+    console.log("type",type);
+    this.setState((state) => {
+      state.elementaries[index][type] = value;
+    }, () => console.log(this.state))
   }
 
   render() {
     const { classes, open, } = this.props;
-    const { inputs } = this.state;
+    const { elementaries } = this.state;
     return (
       <FormContainer>
           <TextField
@@ -47,8 +71,9 @@ class DisciplineForm extends React.Component {
             label="Название"
             type="text"
             fullWidth
+            onChange={this.handleNameChanged}
           />
-          {this.renderInputs(inputs)}
+          {this.renderInputs(elementaries)}
           <Fab
             color="secondary"
             aria-label="Добавить"

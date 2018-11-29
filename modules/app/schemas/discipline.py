@@ -9,7 +9,7 @@ discipline_schema = {
         "number": {
             "type": "string"
         },
-        "description": {
+        "disciplineName": {
             "type": "string"
         },
         "elementaries": {
@@ -20,7 +20,7 @@ discipline_schema = {
                 "number": {
                   "type": "string"
                 },
-                "description": {
+                "elementaryName": {
                   "type": "string"
                 },
               },
@@ -34,7 +34,7 @@ discipline_schema = {
             "format": "email"
         }
     },
-    "required": ["email", "number", "description"],
+    "required": ["email", "number", "disciplineName"],
     "additionalProperties": False
 }
 
@@ -50,7 +50,7 @@ discipline_update_schema = {
               "number": {
                   "type": "string"
               },
-              "description": {
+              "disciplineName": {
                   "type": "string"
               },
               "elementaries": {
@@ -61,7 +61,7 @@ discipline_update_schema = {
                       "number": {
                         "type": "string"
                       },
-                      "description": {
+                      "elementaryName": {
                         "type": "string"
                       },
                     },
