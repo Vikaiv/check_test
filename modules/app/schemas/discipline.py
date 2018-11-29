@@ -34,7 +34,7 @@ discipline_schema = {
             "format": "email"
         }
     },
-    "required": ["email", "number", "disciplineName"],
+    "required": ["email", "disciplineName"],
     "additionalProperties": False
 }
 

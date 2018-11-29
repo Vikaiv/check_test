@@ -29,7 +29,6 @@ const styles = theme => ({
 class ElementaryForm extends Component {
   render() {
     const { classes, onElementaryChanged, index } = this.props;
-    console.log(index);
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
@@ -42,7 +41,7 @@ class ElementaryForm extends Component {
           onChange={onElementaryChanged}
         />
         <TextField
-          id={`name-${index}`}
+          id={`elementaryName-${index}`}
           label="Название компетенции"
           type="text"
           fullWidth

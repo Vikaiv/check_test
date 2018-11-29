@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from "styled-components";
+import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
 
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -23,7 +24,13 @@ const FormContainer = styled.div`
   padding-right: 25px;
 `
 
+@inject("store")
+@observer
 class DisciplineForm extends React.Component {
+  static propTypes = {
+    store: PropTypesMobx.observableObject,
+  };
+
   state = {
     elementaries: [{number: "", elementaryName: ""}],
     disciplineName: "",
@@ -45,7 +52,8 @@ class DisciplineForm extends React.Component {
   }
 
   handleNameChanged = (event) => {
-    this.setState({ disciplineName: event.target.name })
+    this.props.store.disciplineForm.updateField("disciplineName", event.target.value)
+    this.setState({ disciplineName: event.target.value })
   }
 
   handleElementariesChanged = (event) => {
@@ -54,15 +62,16 @@ class DisciplineForm extends React.Component {
     const typeRegExp = /(number|elementaryName)/;
     const index = digitRegExp.exec(id);
     const type = typeRegExp.exec(id)[0];
-    console.log("type",type);
     this.setState((state) => {
       state.elementaries[index][type] = value;
-    }, () => console.log(this.state))
+    }, () => this.props.store.disciplineForm.updateField("elementaries", this.state.elementaries)
+    )
   }
 
   render() {
     const { classes, open, } = this.props;
     const { elementaries } = this.state;
+    console.log(this.state);
     return (
       <FormContainer>
           <TextField

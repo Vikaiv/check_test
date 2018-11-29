@@ -53,12 +53,13 @@ class DisciplineStore {
 
   @action
   addDiscipline = (data) => {
-    addDiscipline(this.rootStore.token, data, {
+    this.token = this.rootStore.token;
+    const requestData = JSON.stringify(data);
+    console.log(requestData);
+    addDiscipline(this.token, requestData, {
       success: (result) => {
         console.log(result);
-        runInAction(() => {
-          console.log(this.disciplines);
-        });      
+        this.fetchDisciplinesList(this.token)           
       },
       error: (result) => { console.error("error: ", result); },
     })
@@ -66,9 +67,9 @@ class DisciplineStore {
 
   @action
   deleteDiscipline = (id) => {
-    const data = JSON.stringify({"id": id});
+    const requestData = JSON.stringify({"id": id});
     this.token = this.rootStore.token;
-    deleteDiscipline(this.token, data, {
+    deleteDiscipline(this.token, requestData, {
       success: (result) => {
         console.log(result);
         this.fetchDisciplinesList(this.token)      

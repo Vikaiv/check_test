@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
 
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -28,14 +29,24 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class FullScreenDialog extends React.Component {
+@inject("store")
+@observer
+class DisciplineDialog extends React.Component {
+  static propTypes = {
+    store: PropTypesMobx.observableObject,
+  };
+
+  constructor(props) {
+    super(props);
+  }
 
   handleClose = () => {
     this.props.onClose();
   }
 
   addDiscipline = () => {
-    this.props.addDiscipline();
+    const { disciplines, disciplineForm } = this.props.store;
+    disciplines.addDiscipline(disciplineForm.fields);
   }
 
   render() {
@@ -60,14 +71,14 @@ class FullScreenDialog extends React.Component {
               </Button>
             </Toolbar>
           </AppBar>
-          <DisciplineForm/>
+          <DisciplineForm />
         </Dialog>
     );
   }
 }
 
-FullScreenDialog.propTypes = {
+DisciplineDialog.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FullScreenDialog);
+export default withStyles(styles)(DisciplineDialog);

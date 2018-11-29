@@ -35,7 +35,7 @@ class Discipline extends Component {
       <Elementary
         key={nanoid()}
       >
-        • {item.description}
+        • {item.number} {item.elementaryName}
       </Elementary>)
 
   showDisciplineInfo = () => {

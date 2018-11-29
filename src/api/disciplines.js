@@ -42,7 +42,6 @@ export const deleteDiscipline = (token, data, {success, error}) => {
       method: "DELETE",
       body: data,
   };
-  console.log("data", data);
   fetch('/discipline', opt)
   .then(response => response.json())
   .then(result => success({result}))

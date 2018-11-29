@@ -40,7 +40,7 @@ const BaseList = ({
       <List className={classes.root}>
         <ListItem
           button
-          // onClick={primaryAction.action}
+          onClick={primaryAction.action}
         >
         <Grid
           container

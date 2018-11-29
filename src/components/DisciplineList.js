@@ -48,7 +48,7 @@ class DisciplineList extends Component {
         {disciplines.map(item =>
           (<Discipline
               key={nanoid()}
-              name={item.description}
+              name={item.disciplineName}
               number={item.number}
               elementaries={item.elementaries}
               id={item._id}

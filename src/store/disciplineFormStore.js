@@ -1,48 +1,21 @@
-import { observable, action, runInAction } from "mobx";
-
-class FormStore {
-  @observable formFields = {
-    number: "",
-    description: "",
-    elementaries: [],
-  };
-
+import { observable, action } from "mobx";
+class DisciplineForm {
+  @observable fields = {
+    disciplineName: "",
+    elementaries: [{number: "", elementaryName: ""}],
+    email: "vi@i.com",
+  }
 
   @action
-  handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
-
-    if (name in this.formFields) {
-      this.formFields[name].onChange(type === "checkbox" ? checked : value);
-
-      if (this.formTouched) {
-        if (!this.formFields[name].error) {
-          this.invalidFields = this.invalidFields.filter(field => field !== name);
-        } else {
-          !this.invalidFields.includes(name) && this.invalidFields.push(name);
-        }
-      }
-    }
-  };
-
-  @action
-  submitForm = () => runInAction(() => {
-    this.formTouched = true;
-    this.invalidFields = [];
-    const fields = Object.keys(this.formFields).filter(item => this.formFields[item].display);
-
-    fields.forEach((item) => {
-      const field = this.formFields[item];
-      field.touched = true;
-      field.validateField();
-
-      if (field.error) {
-        this.invalidFields.push(item);
-      }
-    });
-
-    return this.isFormValid(fields);
-  });
+  /**
+   * Updates field value in the fields object, revalidates new value
+   * @param fieldName name of the form field which would be updated
+   * @param value new value of the field
+   */
+  updateField = (fieldName, value) => {
+    this.fields[fieldName] = value;
+    console.log(this.fields);
+  }
 }
 
-export default FormStore;
+export default DisciplineForm;
