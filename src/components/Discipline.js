@@ -38,17 +38,23 @@ class Discipline extends Component {
         • {item.description}
       </Elementary>)
 
-showDisciplineInfo = () => {
-  this.setState({
-    isInfoShown: !this.state.isInfoShown,
-  })
-}
+  showDisciplineInfo = () => {
+    this.setState({
+      isInfoShown: !this.state.isInfoShown,
+    })
+  }
 
   showTests = (id) => {
     const { store } = this.props;
     const {router: {goTo}} = store;
     goTo(views.tests);
     store.fetchTests(id);
+  }
+
+  deleteDiscipline = (id) => {
+    console.log(id);
+    const { store } = this.props;
+    store.disciplines.deleteDiscipline(id);
   }
 
   render() {
@@ -71,6 +77,7 @@ showDisciplineInfo = () => {
           title: "Перейти к тестам",
         }}
         show={isInfoShown}
+        onDeleteItem={() => this.deleteDiscipline(id)}
       >
       </BaseList>
     )

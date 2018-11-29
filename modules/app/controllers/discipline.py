@@ -37,6 +37,7 @@ def discipline():
             return jsonify({'ok': False, 'message': 'Bad request parameters: {}'.format(data['message'])}), 400
 
     if request.method == 'DELETE':
+        LOG.debug(data)
         if data.get('id', None) is not None:
             db_response = mongo.db.disciplines.delete_one(
                 {'_id': ObjectId(data['id'])})

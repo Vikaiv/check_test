@@ -37,6 +37,11 @@ module.exports = {
             secure: true,
             changeOrigin: true
         },
+        '/discipline': {
+          target: 'http://127.0.0.1:4000/',
+          secure: true,
+          changeOrigin: true
+      },
         '/auth': {
           target: 'http://127.0.0.1:4000/',
           secure: true,

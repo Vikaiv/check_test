@@ -11,7 +11,7 @@ class RootStore {
   constructor() {
     this.authUser("vi@i.com", "12345")
     this.router = new RouterStore();
-    this.disciplines = new DisciplineStore();
+    this.disciplines = new DisciplineStore(this);
     this.router.goTo(views.home);
   }
 
