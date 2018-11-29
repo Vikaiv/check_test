@@ -5,7 +5,7 @@ import { Route } from 'mobx-router';
 
 //components
 import DisciplineList from '../components/DisciplineList';
-import Tests from '../components/Tests';
+import TestList from '../components/TestList';
 import ResultsPage from '../components/ResultsPage';
 
 const views = {
@@ -15,7 +15,7 @@ const views = {
   }),
   tests: new Route({
     path: '/tests',
-    component: <Tests/>,
+    component: <TestList/>,
   }),
   results: new Route({
     path: '/results',

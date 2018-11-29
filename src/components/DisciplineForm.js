@@ -41,7 +41,7 @@ class DisciplineForm extends React.Component {
       elementaries: this.state.elementaries.concat([{number: "", elementaryName: ""}])
     })
   }
-
+  
   renderInputs = (elementaries) => {
     return elementaries.map((item, index) => (
       <ElementaryForm

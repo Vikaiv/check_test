@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 import QuestionWordingResult from "./QuestionWordingResult";
 import Pie3dChart from "./charts/Pie3dChart";
 import Bar2dChart from "./charts/Bar2dChart";
-import data from "../fakeData/fakeData.json"
+import data from "../data/fakeResultsData.json"
 
 
 const styles = theme => ({

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { observer, inject, PropTypes as PropTypesMobx } from "mobx-react";
 
 import FullscreenDialog from "./FullscreenDialog";
-import DisciplineForm from "./DisciplineForm";
+import TestForm from "./TestForm";
 
 @inject("store")
 @observer
-class DisciplineDialog extends React.Component {
+class TestDialog extends React.Component {
   static propTypes = {
     store: PropTypesMobx.observableObject,
   };
@@ -16,28 +16,28 @@ class DisciplineDialog extends React.Component {
     this.props.onClose();
   }
 
-  addDiscipline = () => {
-    const { disciplines, disciplineForm } = this.props.store;
-    this.handleClose();
-    disciplines.addDiscipline(disciplineForm.fields);
-  }
+  // addTest = () => {
+  //   const { disciplines, disciplineForm } = this.props.store;
+  //   this.handleClose();
+  //   disciplines.addDiscipline(disciplineForm.fields);
+  // }
 
   render() {
     const { onOpen, open } = this.props;
     return (
         <FullscreenDialog
-          title="Добавление дисциплины"
+          title="Добавление теста"
           mainAction={{
               mainActionTitle: "Сохранить",
-              mainActionAction: this.addDiscipline,
+              mainActionAction: () => {},
           }}
           onOpen={onOpen}
           onClose={this.handleClose}
           open={open}
         >
-          <DisciplineForm/>
+          <TestForm/>
         </FullscreenDialog>
     );
   }
 }
-export default DisciplineDialog;
+export default TestDialog;
