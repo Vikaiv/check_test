@@ -50,12 +50,17 @@ class QuesionForm extends Component {
       </MenuItem>))
   );
 
+  handleQuestionChanged = (event, value) => {
+    console.log("changeee", value);
+    () => this.props.onQuestionChanged(event. value);
+  }
+
   render() {
-    const { classes, onQuestionChanged, index, questionType } = this.props;
+    const { classes, onQuestionChanged, onAnswerVariantsChanged, index, type, answerVariants } = this.props;
     return (
       <Card className={classes.container}>
         <TextField
-          name={`questionDescription-${index}`}
+          name={`description-${index}`}
           label="Формулировка вопроса"
           type="text"
           fullWidth
@@ -66,19 +71,23 @@ class QuesionForm extends Component {
           <InputLabel htmlFor="question-type-select">Тип вопроса</InputLabel>
           <Select
             className={classes.select}
-            value={questionType}
+            value={type}
             onChange={onQuestionChanged}
             inputProps={{
-              name: `questionType-${index}`,
+              name: `type-${index}`,
               id: 'question-type-select',
             }}
           >
             {this.renderQuestionOptions(questionTypes)}
           </Select>
         </FormControl>
-        {(questionType === "alternativeChoice" ||
-          questionType === "multipleChoice") &&
-          <QuestionVariants />
+        {(type === "alternativeChoice" ||
+          type === "multipleChoice") &&
+          <QuestionVariants
+            cardIndex={index}
+            onAnswerVariantsChanged={onAnswerVariantsChanged}
+            answerVariants={answerVariants}
+          />
         }
       </Card>)
   }

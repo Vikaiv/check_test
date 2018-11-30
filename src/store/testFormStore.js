@@ -3,7 +3,7 @@ class TestForm {
   @observable fields = {
     name: "",
     questions: [{
-      questionType: "",
+      type: "",
       description: "",
       answerVariants: []
     }],

@@ -19,9 +19,9 @@ const styles = theme => ({
 });
 
 const questionObject = {
-  questionType: "",
+  type: "",
   description: "",
-  answerVariants: [],
+  answerVariants: ["", "", "", ""],
 }
 
 const FormContainer = styled.div`
@@ -50,14 +50,15 @@ class TestForm extends React.Component {
   
   renderQuestionCards = (questions) => {
     return questions.map((item, index) => {
-      console.log("render question cards", this.state.questions[index].questionType);
       return (
       <QuestionForm
         key={`questionForm-${index}`}
         index={index}
         onQuestionChanged={this.handleQuestionsChanged}
-        questionType={this.state.questions[index].questionType}
+        onAnswerVariantsChanged={this.handleAnswerVariantsChanged}
+        type={this.state.questions[index].type}
         description={this.state.questions[index].description}
+        answerVariants={this.state.questions[index].answerVariants}
       />)})
   }
 
@@ -66,27 +67,32 @@ class TestForm extends React.Component {
     this.setState({ name: event.target.value })
   }
 
-  handleQuestionsChanged = (event) => {
-    const { value, name } = event.target;
-    const digitRegExp = /\d{1,4}/;
-    const typeRegExp = /(questionType|questionDescription)/;
-    const index = digitRegExp.exec(name)[0];
-    console.log("index", index);
-    const type = typeRegExp.exec(name)[0];
-    console.log(this.state.questions[index][type]);
+  handleAnswerVariantsChanged = (value, index) => {
     this.setState((state) => {
-      state.questions[index][type] = value;
+      state.questions[index]["answerVariants"] = value;
+      return state;
+    }, () => this.props.store.testForm.updateField("questions", this.state.questions))
+  }
+
+  handleQuestionsChanged = (event, valueParameter) => {
+    const { value, name } = event.target;
+    const valueToSet = value || valueParameter;
+    const digitRegExp = /\d{1,4}/;
+    const typeRegExp = /(type|description)/;
+    const index = digitRegExp.exec(name)[0];
+    const type = typeRegExp.exec(name)[0];
+    this.setState((state) => {
+      state.questions[index][type] = valueToSet;
       return state;
     }, () => {
-      console.log("state questions after change", this.state.questions);
+      console.log("state questions after change", this.state.questions[index][type]);
       this.props.store.testForm.updateField("questions", this.state.questions)
     })
   }
 
   render() {
-    const { classes, open, } = this.props;
+    const { classes, open } = this.props;
     const { questions, name } = this.state;
-    console.log("render state", this.state.questions);
     return (
       <FormContainer>
         <TextField
