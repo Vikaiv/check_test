@@ -5,6 +5,7 @@ import { auth } from "../api/login";
 import { fetchTestsByDisciplineId } from "../api/tests";
 import DisciplineStore from "./disciplineStore";
 import DisciplineFormStore from "./disciplineFormStore";
+import TestFormStore from "./testFormStore";
 class RootStore {
   @observable tests = [];
   @observable token = null;
@@ -14,6 +15,7 @@ class RootStore {
     this.router = new RouterStore();
     this.disciplines = new DisciplineStore(this);
     this.disciplineForm = new DisciplineFormStore(this);
+    this.testForm = new TestFormStore(this);
     this.router.goTo(views.home);
   }
 

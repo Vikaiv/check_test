@@ -60,8 +60,8 @@ class TestList extends Component {
         </Fab>
         <TestDialog
           open={this.state.isTestDialogOpen}
-          onOpen={this.openDisciplineDialog}
-          onClose={this.closeDisciplineDialog}
+          onOpen={this.openTestDialog}
+          onClose={this.closeTestDialog}
         />
       </Fragment>
     );

@@ -21,7 +21,7 @@ const styles = theme => ({
 const questionObject = {
   questionType: "",
   description: "",
-  answerVariants: "",
+  answerVariants: [],
 }
 
 const FormContainer = styled.div`
@@ -38,7 +38,7 @@ class TestForm extends React.Component {
   };
 
   state = {
-    title: "",
+    name: "",
     questions: [questionObject],
   }
 
@@ -49,53 +49,63 @@ class TestForm extends React.Component {
   }
   
   renderQuestionCards = (questions) => {
-    return questions.map((item, index) => (
+    return questions.map((item, index) => {
+      console.log("render question cards", this.state.questions[index].questionType);
+      return (
       <QuestionForm
-        key={`input-${index}`}
+        key={`questionForm-${index}`}
         index={index}
-        // onElementaryChanged={this.handleElementariesChanged}
-      />))
+        onQuestionChanged={this.handleQuestionsChanged}
+        questionType={this.state.questions[index].questionType}
+        description={this.state.questions[index].description}
+      />)})
   }
 
-  // handleNameChanged = (event) => {
-  //   this.props.store.disciplineForm.updateField("disciplineName", event.target.value)
-  //   this.setState({ disciplineName: event.target.value })
-  // }
+  handleNameChanged = (event) => {
+    this.props.store.testForm.updateField("name", event.target.value)
+    this.setState({ name: event.target.value })
+  }
 
-  // handleElementariesChanged = (event) => {
-  //   const { id, value } = event.target;
-  //   const digitRegExp = /\d{1,4}/;
-  //   const typeRegExp = /(number|elementaryName)/;
-  //   const index = digitRegExp.exec(id);
-  //   const type = typeRegExp.exec(id)[0];
-  //   this.setState((state) => {
-  //     state.elementaries[index][type] = value;
-  //   }, () => this.props.store.disciplineForm.updateField("elementaries", this.state.elementaries)
-  //   )
-  // }
+  handleQuestionsChanged = (event) => {
+    const { value, name } = event.target;
+    const digitRegExp = /\d{1,4}/;
+    const typeRegExp = /(questionType|questionDescription)/;
+    const index = digitRegExp.exec(name)[0];
+    console.log("index", index);
+    const type = typeRegExp.exec(name)[0];
+    console.log(this.state.questions[index][type]);
+    this.setState((state) => {
+      state.questions[index][type] = value;
+      return state;
+    }, () => {
+      console.log("state questions after change", this.state.questions);
+      this.props.store.testForm.updateField("questions", this.state.questions)
+    })
+  }
 
   render() {
     const { classes, open, } = this.props;
-    const { questions } = this.state;
-    console.log(this.state);
+    const { questions, name } = this.state;
+    console.log("render state", this.state.questions);
     return (
       <FormContainer>
-          <TextField
-            autoFocus
-            id="discipline-name"
-            label="Название теста"
-            type="text"
-            fullWidth
-            // onChange={this.handleNameChanged}
-          />
-          {this.renderQuestionCards(questions)}
-          <Fab
-            color="secondary"
-            aria-label="Добавить"
-            className={classes.addButton}
-            onClick={this.addQuestionCard}
-          >
-            <AddIcon />
+        <TextField
+          autoFocus
+          id="test-name"
+          label="Название теста"
+          type="text"
+          fullWidth
+          onChange={this.handleNameChanged}
+          value={name}
+        />
+        {this.renderQuestionCards(questions)}
+        <Fab
+          color="secondary"
+          aria-label="Добавить"
+          className={classes.addButton}
+          onClick={this.addQuestionCard}
+        >
+          <AddIcon />
         </Fab>
       </FormContainer>
     );

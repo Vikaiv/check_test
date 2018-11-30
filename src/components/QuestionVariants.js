@@ -19,7 +19,8 @@ class QuestionVariants extends Component {
     return (
       <form className={classes} noValidate autoComplete="off">
         <TextField
-          id="answerVariant5"
+          id="answerVariant1"
+          label="Вариант 1"
           type="text"
           fullWidth
           // className={classes.indexField}

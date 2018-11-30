@@ -49,6 +49,7 @@ class Discipline extends Component {
     const {router: {goTo}} = store;
     goTo(views.tests);
     store.fetchTests(id);
+    store.testForm.updateField("disciplineId", id);
   }
 
   deleteDiscipline = (id) => {

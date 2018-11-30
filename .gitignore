@@ -78,3 +78,5 @@ ENV/
 
 yarn.lock
 package-lock.json
+
+TO-DO.txt

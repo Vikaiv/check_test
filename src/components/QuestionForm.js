@@ -30,63 +30,56 @@ const styles = theme => ({
     display: "flex",
   },
   formControl: {
-    margin: 0,
+    marginLeft: 0,
+    marginRight: 0,
     minWidth: 170,
+    width: "50%"
   },
 });
 
 
 class QuesionForm extends Component {
-  state = {
-    questionType: ""
-  }
 
-  handleQuestionTypeChanged = (event) => {
-    this.setState({questionType: event.target.value})
-  }
-
-  renderQuestionOptions = (options) =>(
-      options.map(option => (
-        <MenuItem
-          value={option.value}
-          key={nanoid()}
-        >
-          {option.label}
-        </MenuItem>))
+  renderQuestionOptions = (options) => (
+    options.map(option => (
+      <MenuItem
+        value={option.value}
+        key={nanoid()}
+      >
+        {option.label}
+      </MenuItem>))
   );
 
   render() {
-    const { classes, onElementaryChanged, index } = this.props;
-    const { questionType } = this.state;
+    const { classes, onQuestionChanged, index, questionType } = this.props;
     return (
       <Card className={classes.container}>
-          <TextField
-            id={`number-${index}`}
-            label="Формулировка вопроса"
-            type="text"
-            fullWidth
-            // className={classes.indexField}
-            margin="normal"
-            // onChange={onElementaryChanged}
-          />
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="demo-controlled-open-select">Тип вопроса</InputLabel>
-            <Select
-              className={classes.select}
-              value={this.state.questionType}
-              onChange={this.handleQuestionTypeChanged}
-              inputProps={{
-                name: 'age',
-                id: 'demo-controlled-open-select',
-              }}
-            >
-              {this.renderQuestionOptions(questionTypes)}
-            </Select>
-          </FormControl>
-          {(questionType === "alternativeChoice" ||
-            questionType === "multipleChoice") &&
-              <QuestionVariants />
-          }
+        <TextField
+          name={`questionDescription-${index}`}
+          label="Формулировка вопроса"
+          type="text"
+          fullWidth
+          margin="normal"
+          onChange={onQuestionChanged}
+        />
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="question-type-select">Тип вопроса</InputLabel>
+          <Select
+            className={classes.select}
+            value={questionType}
+            onChange={onQuestionChanged}
+            inputProps={{
+              name: `questionType-${index}`,
+              id: 'question-type-select',
+            }}
+          >
+            {this.renderQuestionOptions(questionTypes)}
+          </Select>
+        </FormControl>
+        {(questionType === "alternativeChoice" ||
+          questionType === "multipleChoice") &&
+          <QuestionVariants />
+        }
       </Card>)
   }
 };
