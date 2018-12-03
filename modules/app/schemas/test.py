@@ -6,7 +6,7 @@ from jsonschema.exceptions import SchemaError
 test_schema = {
     "type": "object",
     "properties": {
-        "title": {
+        "name": {
             "type": "string"
         },
         "questions": {
@@ -14,19 +14,21 @@ test_schema = {
             "items": {
                 "type": "object",
                 "properties": {
-                    "question_type": {
+                    "type": {
                         "type": "string",
                         "enum": [
-                            "С несколькими правильными ответами",
-                            "С одним правильным ответом",
-                            "На поиск соответствия",
-                            "В свободной форме"
+                            "alternativeChoice",
+                                "multipleChoice",
+                                "matching",
+                                "sequencing",
+                                "briefAnswer",
+                                "essay"
                         ]
                     },
                     "description": {
                         "type": "string"
                     },
-                    "answer_variants": {
+                    "answerVariants": {
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -51,26 +53,28 @@ test_update_schema = {
             "type": "string"
         },
         "payload": {
-            "title": {
+            "name": {
                 "type": "string"
             },
             "questions": {
                 "type": "array",
                 "items": {
                     "properties": {
-                        "question_type": {
+                        "type": {
                             "type": "string",
                             "enum": [
-                                "С несколькими правильными ответами",
-                                "С одним правильным ответом",
-                                "На поиск соответствия",
-                                "В свободной форме"
+                                "alternativeChoice",
+                                "multipleChoice",
+                                "matching",
+                                "sequencing",
+                                "briefAnswer",
+                                "essay"
                             ]
                         },
                         "description": {
                             "type": "string"
                         },
-                        "answer_variants": {
+                        "answerVariants": {
                             "type": "array",
                             "items": {
                                 "type": "string"

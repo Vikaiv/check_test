@@ -31,20 +31,6 @@ class DisciplineStore {
   }
 
   @action
-  fetchTests = (disciplineId) => {
-    console.log(disciplineId);
-    fetchTestsByDisciplineId(this.token, disciplineId, {
-      success: (result) => {
-        runInAction(() => {
-          this.tests = result.result.data;
-          console.log(this.tests);
-        });      
-      },
-      error: (result) => { console.error("error: ", result); },
-    })
-  }
-
-  @action
   showDisciplineInfo = (disciplineId) => {
     const disciplineIndex = this.disciplines.findIndex(item => item._id === disciplineId);
     this.disciplines[disciplineIndex].isInfoShown = !this.disciplines[disciplineIndex].isInfoShown;

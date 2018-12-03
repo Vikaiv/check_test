@@ -4,16 +4,17 @@ import views from "../views/views";
 import { auth } from "../api/login";
 import { fetchTestsByDisciplineId } from "../api/tests";
 import DisciplineStore from "./disciplineStore";
+import TestStore from "./testStore";
 import DisciplineFormStore from "./disciplineFormStore";
 import TestFormStore from "./testFormStore";
 class RootStore {
-  @observable tests = [];
   @observable token = null;
 
   constructor() {
     this.authUser("vi@i.com", "12345")
     this.router = new RouterStore();
     this.disciplines = new DisciplineStore(this);
+    this.tests = new TestStore(this);
     this.disciplineForm = new DisciplineFormStore(this);
     this.testForm = new TestFormStore(this);
     this.router.goTo(views.home);
@@ -28,18 +29,6 @@ class RootStore {
           this.token = result.result.data.token;
           this.disciplines.fetchDisciplinesList(this.token);
         });  
-      },
-      error: (result) => { console.error("error: ", result); },
-    })
-  }
-
-  @action
-  fetchTests = (disciplineId) => {
-    fetchTestsByDisciplineId(this.token, disciplineId, {
-      success: (result) => {
-        runInAction(() => {
-          this.tests = result.result.data;
-        });      
       },
       error: (result) => { console.error("error: ", result); },
     })

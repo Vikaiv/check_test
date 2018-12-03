@@ -16,11 +16,11 @@ class TestDialog extends React.Component {
     this.props.onClose();
   }
 
-  // addTest = () => {
-  //   const { disciplines, disciplineForm } = this.props.store;
-  //   this.handleClose();
-  //   disciplines.addDiscipline(disciplineForm.fields);
-  // }
+  addTest = () => {
+    const { tests, testForm } = this.props.store;
+    this.handleClose();
+    tests.addTest(testForm.fields);
+  }
 
   render() {
     const { onOpen, open } = this.props;
@@ -29,7 +29,7 @@ class TestDialog extends React.Component {
           title="Добавление теста"
           mainAction={{
               mainActionTitle: "Сохранить",
-              mainActionAction: () => {},
+              mainActionAction: this.addTest,
           }}
           onOpen={onOpen}
           onClose={this.handleClose}

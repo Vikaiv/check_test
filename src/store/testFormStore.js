@@ -7,7 +7,7 @@ class TestForm {
       description: "",
       answerVariants: []
     }],
-    disciplineId: "",
+    discipline: "",
     email: "vi@i.com",
   }
 
