@@ -49,7 +49,8 @@ class FullscreenDialog extends React.Component {
       open,
       title,
       onClose,
-      mainAction: {mainActionTitle, mainActionAction}
+      mainAction: {mainActionTitle, mainActionAction},
+      switchWayAdd
     } = this.props;
     return (
         <Dialog
@@ -66,6 +67,9 @@ class FullscreenDialog extends React.Component {
               <Typography variant="h6" color="inherit" className={classes.flex}>
                 {title}
               </Typography>
+              <Button color="secondary" onClick={switchWayAdd}>
+                Ввести в JSON-формате
+              </Button>
               <Button color="inherit" onClick={mainActionAction}>
                 {mainActionTitle}
               </Button>

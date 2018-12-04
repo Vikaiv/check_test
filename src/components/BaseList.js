@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = theme => ({
   root: {
@@ -36,6 +37,7 @@ const BaseList = ({
   secondaryText,
   show,
   onDeleteItem,
+  onEditItem,
  }) => (
       <List className={classes.root}>
         <ListItem
@@ -53,6 +55,12 @@ const BaseList = ({
             {show && secondaryText}
           </ListItemText>
           <ListItemSecondaryAction>
+            <IconButton
+              aria-label="Edit"
+              onClick={onEditItem}
+            >
+              <EditIcon />
+            </IconButton>
             <IconButton
               aria-label="Delete"
               onClick={onDeleteItem}

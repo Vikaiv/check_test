@@ -6,8 +6,8 @@
   "author": "Victoria Ivanova <vikaaiv17@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "NODE_ENVV=production webpack --config webpack.config.js",
-    "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js --mode development",
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server --config webpack.config.js --mode development",
     "serve": "webpack-dev-server --mode development --open"
   },
   "devDependencies": {
