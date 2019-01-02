@@ -1,7 +1,7 @@
 import { observable, action, runInAction } from "mobx";
 import { RouterStore } from 'mobx-router';
 import views from "../views/views";
-import { fetchDisciplines, addDiscipline, deleteDiscipline } from "../api/disciplines";
+import { fetchDisciplines, addDiscipline, deleteDiscipline, getDisciplineById } from "../api/disciplines";
 import RootStore from "./disciplineStore";
 
 class DisciplineStore {
@@ -46,6 +46,19 @@ class DisciplineStore {
       success: (result) => {
         console.log(result);
         this.fetchDisciplinesList(this.token)           
+      },
+      error: (result) => { console.error("error: ", result); },
+    })
+  }
+
+  @action
+  getDiscipline = (data) => {
+    this.token = this.rootStore.token;
+    // const requestData = JSON.stringify(data);
+    getDisciplineById(this.token, data, {
+      success: (result) => {
+        console.log(result);
+        this.rootStore.disciplineForm.setAllFields(result);        
       },
       error: (result) => { console.error("error: ", result); },
     })

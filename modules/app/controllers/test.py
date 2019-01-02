@@ -66,15 +66,16 @@ def list_tests():
     user = get_jwt_identity()
     data = request.get_json()
     LOG.debug(data)
-    # user = {'email': 'riken.mehta03@gmail.com'}
     if request.method == 'POST':
         query = request.args
-        db_response = mongo.db.tests.find({'discipline': data['discipline']})
+        db_response = mongo.db.tests.find({'disciplineId': data['discipline']})
+        LOG.debug(db_response)
         if query.get('group', None):
             return_data = {}
             for test in db_response:
                 try:
                     return_data[test['status']].append(test)
+                    LOG.debug(test)
                 except:
                     return_data[test['status']] = [test]
         else:

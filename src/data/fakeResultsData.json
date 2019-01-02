@@ -22,7 +22,8 @@
         "caption": "Оценка покрытия дисциплины тестами по каждой компетенции",
         "subCaption": "В процентах",
         "numberPrefix": "%",
-        "theme": "fusion"
+        "theme": "fusion",
+        "yAxisMaxValue": "100"
       },
       "data": [
         {

@@ -40,13 +40,14 @@ class TestList extends Component {
   renderTestList = (tests) => (
     <List>
       {tests.map(item =>
-        <Test key={nanoid()} name={item.title} questions={item.questions} />
+        <Test key={nanoid()} name={item.name} questions={item.questions} />
       )}
     </List>);
 
   render() {
     const { store, classes } = this.props;
-    const { tests }= store;
+    const { tests }= store.tests;
+    console.log("tests", tests);
     return (
       <Fragment>
         {tests && tests.length ? this.renderTestList(tests) : ""}

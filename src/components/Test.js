@@ -40,6 +40,7 @@ class Test extends Component {
   render = () => {
     const { name, questions, classes } = this.props;
     const { isInfoShown } = this.props;
+    console.log("name", name);
     return (
       <BaseList
         primaryText={name}

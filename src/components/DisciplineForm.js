@@ -36,6 +36,17 @@ class DisciplineForm extends React.Component {
     disciplineName: "",
   }
 
+  componentDidMount = () => {
+    console.log(this.props.store.disciplineForm.fields.disciplineName);
+    const { elementaries, disciplineName } = this.props.store.disciplineForm.fields || "";
+    if (elementaries || disciplineName) {
+      this.setState({
+        elementaries,
+        disciplineName,
+      })
+    }
+  }
+
   addElementaryField = () => {
     this.setState({ 
       elementaries: this.state.elementaries.concat([{number: "", elementaryName: ""}])
@@ -71,7 +82,6 @@ class DisciplineForm extends React.Component {
   render() {
     const { classes, open, } = this.props;
     const { elementaries } = this.state;
-    console.log(this.state);
     return (
       <FormContainer>
           <TextField
@@ -82,7 +92,7 @@ class DisciplineForm extends React.Component {
             fullWidth
             onChange={this.handleNameChanged}
           />
-          {this.renderInputs(elementaries)}
+          {elementaries && this.renderInputs(elementaries)}
           <Fab
             color="secondary"
             aria-label="Добавить"

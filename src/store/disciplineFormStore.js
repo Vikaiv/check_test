@@ -14,6 +14,12 @@ class DisciplineForm {
    */
   updateField = (fieldName, value) => {
     this.fields[fieldName] = value;
+    // console.log(this.fields);
+  }
+
+  @action
+  setAllFields = (disciplineData) => {
+    this.fields = disciplineData.result.data;
     console.log(this.fields);
   }
 }

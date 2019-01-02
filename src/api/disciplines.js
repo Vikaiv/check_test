@@ -33,6 +33,22 @@ export const addDiscipline = (token, data, {success, error}) => {
   );
 }
 
+export const getDisciplineById = (token, id, {success, error}) => {
+  var opt = {
+      headers: {
+          "content-type": "application/json",
+          'Authorization': 'Bearer ' + token
+      },
+      method: "GET",
+  };
+  fetch(`/discipline?id=${id}`, opt)
+  .then(response => response.json())
+  .then(result => success({result}))
+  .catch(
+    exception => error(exception),
+  );
+}
+
 export const deleteDiscipline = (token, data, {success, error}) => {
   var opt = {
       headers: {

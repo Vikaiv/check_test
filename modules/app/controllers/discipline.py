@@ -65,7 +65,7 @@ def discipline():
 def list_disciplines():
     ''' route to get all the disciplines for a user '''
     user = get_jwt_identity()
-    LOG.debug(user)
+    # LOG.debug(user)
     # user = {'email': 'riken.mehta03@gmail.com'}
     if request.method == 'GET':
         query = request.args
@@ -75,9 +75,10 @@ def list_disciplines():
             for discipline in data:
                 try:
                     return_data[discipline['status']].append(discipline)
+                    LOG.debug(discipline)
                 except:
                     return_data[discipline['status']] = [discipline]
         else:
             return_data = list(data)
-        return jsonify({'ok': True, 'data': return_data
-})
+            LOG.debug(data)
+        return jsonify({'ok': True, 'data': return_data})

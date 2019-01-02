@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 
 import BaseList from "./BaseList";
+import EditDisciplineDialog from "./EditDisciplineDialog";
 
 import views from '../views/views';
 
@@ -27,7 +28,8 @@ const styles = theme => ({
 class Discipline extends Component {
 
   state = {
-    isInfoShown: false
+    isInfoShown: false,
+    isEditDialogOpened: false
   }
 
   renderElementaries = (elementaries) =>
@@ -52,35 +54,59 @@ class Discipline extends Component {
     store.testForm.updateField("discipline", id);
   }
 
-  deleteDiscipline = (id) => {
+  openEditDisciplineDialog = (id) => {
     console.log(id);
     const { store } = this.props;
+    store.disciplines.getDiscipline(id);
+    this.setState({isEditDialogOpened: true})
+  }
+
+  closeEditDisciplineDialog = () => {
+    this.setState({isEditDialogOpened: false})
+  }
+
+  deleteDiscipline = (id) => {
+    const { store } = this.props;
     store.disciplines.deleteDiscipline(id);
+  }
+
+  editDiscipline = (id) => {
+    const { store } = this.props;
+    // store.disciplines.editDiscipline(id);
   }
 
   render() {
     const { name, elementaries, id, classes } = this.props;
     const { isInfoShown } = this.state;
     return (
-      <BaseList
-        primaryText={name}
-        secondaryText={
-            <List className={classes.list}>
-              {this.renderElementaries(elementaries)}
-            </List>
-        }
-        primaryAction={{
-          action:  this.showDisciplineInfo,
-          title: "Развернуть",
-        }}
-        secondaryAction={{
-          action: () => this.showTests(id),
-          title: "Перейти к тестам",
-        }}
-        show={isInfoShown}
-        onDeleteItem={() => this.deleteDiscipline(id)}
-      >
-      </BaseList>
+      <Fragment>
+        <BaseList
+          id={id}
+          primaryText={name}
+          secondaryText={
+              <List className={classes.list}>
+                {this.renderElementaries(elementaries)}
+              </List>
+          }
+          primaryAction={{
+            action:  this.showDisciplineInfo,
+            title: "Развернуть",
+          }}
+          secondaryAction={{
+            action: () => this.showTests(id),
+            title: "Перейти к тестам",
+          }}
+          show={isInfoShown}
+          onDeleteItem={() => this.deleteDiscipline(id)}
+          onEditItem={() => this.openEditDisciplineDialog(id)}
+        >
+        </BaseList>
+        <EditDisciplineDialog
+            open={this.state.isEditDialogOpened}
+            onOpen={(e, id) => this.openEditDisciplineDialog(e, id)}
+            onClose={this.closeEditDisciplineDialog}
+          />
+      </Fragment>
     )
   }
 }
